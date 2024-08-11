@@ -228,7 +228,8 @@ export default function Home() {
               transition: "transform 0.1s linear",
             }}
           >
-            Use code "fearless" for 5% off any account
+            🎉 Use my affiliate code "fearless" for a sweet 5% discount on any
+            MFFU account.
           </div>
         </div>
       </div>
