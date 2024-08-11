@@ -18,10 +18,10 @@ export default function Home() {
   useEffect(() => {
     const animateBanner = () => {
       setBannerPosition((prevPosition) =>
-        prevPosition <= -100 ? 100 : prevPosition - 0.5
+        prevPosition <= -100 ? 100 : prevPosition - 0.1
       );
     };
-    const intervalId = setInterval(animateBanner, 20);
+    const intervalId = setInterval(animateBanner, 50);
     return () => clearInterval(intervalId);
   }, []);
 
@@ -73,6 +73,9 @@ export default function Home() {
   return (
     <ThemeProvider attribute="class">
       <div className="min-h-screen w-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 text-white flex flex-col items-center justify-center p-4 md:p-8 transition-all duration-300">
+        <h1 className="text-5xl md:text-6xl font-extrabold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-red-400 to-pink-400 dark:from-blue-300 dark:via-indigo-400 dark:to-purple-500 animate-pulse">
+          Futures Math
+        </h1>
         <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8 w-full max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: -50 }}
@@ -80,9 +83,9 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="bg-white bg-opacity-10 dark:bg-gray-800 dark:bg-opacity-30 backdrop-blur-2xl rounded-3xl p-6 md:p-10 shadow-2xl w-full md:w-1/2 border border-white border-opacity-20 dark:border-gray-700"
           >
-            <h1 className="text-3xl md:text-4xl font-extrabold mb-6 md:mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-400 dark:via-indigo-500 dark:to-purple-600">
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-6 md:mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-400 dark:via-indigo-500 dark:to-purple-600">
               Consistency Calculator
-            </h1>
+            </h2>
             <div className="space-y-6 md:space-y-8">
               <div>
                 <label
@@ -238,25 +241,24 @@ export default function Home() {
             )}
           </motion.div>
         </div>
-
         <Toaster />
         <div className="fixed bottom-0 left-0 w-full overflow-hidden bg-black bg-opacity-50 py-2">
           <div
             className="whitespace-nowrap text-white font-bold text-sm md:text-lg"
             style={{
               transform: `translateX(${bannerPosition}%)`,
-              transition: "transform 0.1s linear",
+              transition: "transform 5s linear",
             }}
           >
             🎉 Use my affiliate code "fearless" for a sweet 5% discount on any
             MFFU account. Or use this link{" "}
             <a
-              href="https://myfundedfutures.com/?ref=1924"
+              href="https://myfundedfutures.com/?ref=1924&campaign=FuturesMath"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:text-blue-300 underline"
             >
-              https://myfundedfutures.com/?ref=1924
+              https://myfundedfutures.com/?ref=1924&campaign=FuturesMath
             </a>
           </div>
         </div>
