@@ -66,18 +66,18 @@ export default function Home() {
 
   return (
     <ThemeProvider attribute="class">
-      <div className="min-h-screen w-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 text-white flex flex-col items-center justify-center p-8 transition-all duration-300">
-        <div className="flex flex-row space-x-8 w-full max-w-6xl">
+      <div className="min-h-screen w-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 text-white flex flex-col items-center justify-center p-4 md:p-8 transition-all duration-300">
+        <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8 w-full max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-white bg-opacity-10 dark:bg-gray-800 dark:bg-opacity-30 backdrop-blur-2xl rounded-3xl p-10 shadow-2xl w-1/2 border border-white border-opacity-20 dark:border-gray-700"
+            className="bg-white bg-opacity-10 dark:bg-gray-800 dark:bg-opacity-30 backdrop-blur-2xl rounded-3xl p-6 md:p-10 shadow-2xl w-full md:w-1/2 border border-white border-opacity-20 dark:border-gray-700"
           >
-            <h1 className="text-4xl font-extrabold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-400 dark:via-indigo-500 dark:to-purple-600">
+            <h1 className="text-3xl md:text-4xl font-extrabold mb-6 md:mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-400 dark:via-indigo-500 dark:to-purple-600">
               Consistency Calculator
             </h1>
-            <div className="space-y-8">
+            <div className="space-y-6 md:space-y-8">
               <div>
                 <label
                   htmlFor="accountBalance"
@@ -90,7 +90,7 @@ export default function Home() {
                   type="number"
                   onChange={(e) => setAccountBalance(Number(e.target.value))}
                   placeholder="Enter amount"
-                  className="w-full p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
+                  className="w-full p-3 md:p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
                 />
               </div>
               <div>
@@ -105,7 +105,7 @@ export default function Home() {
                   type="number"
                   onChange={(e) => setBiggestProfitDay(Number(e.target.value))}
                   placeholder="Enter amount"
-                  className="w-full p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
+                  className="w-full p-3 md:p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
                 />
               </div>
               <div>
@@ -124,7 +124,7 @@ export default function Home() {
                   onChange={(e) =>
                     setConsistencyPercentage(Number(e.target.value))
                   }
-                  className="w-full p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
+                  className="w-full p-3 md:p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
                 />
               </div>
 
@@ -135,7 +135,7 @@ export default function Home() {
                 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={calculateConsistencyRule}
-                className="w-full bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-500 dark:via-indigo-600 dark:to-purple-700 text-white font-bold py-4 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"
+                className="w-full bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-500 dark:via-indigo-600 dark:to-purple-700 text-white font-bold py-3 md:py-4 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"
               >
                 Calculate Consistency
               </motion.button>
@@ -145,7 +145,7 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="mt-8 text-lg font-semibold text-center bg-white bg-opacity-20 dark:bg-gray-700 dark:bg-opacity-30 p-6 rounded-xl border border-white border-opacity-20 dark:border-gray-600 shadow-inner"
+                className="mt-6 md:mt-8 text-base md:text-lg font-semibold text-center bg-white bg-opacity-20 dark:bg-gray-700 dark:bg-opacity-30 p-4 md:p-6 rounded-xl border border-white border-opacity-20 dark:border-gray-600 shadow-inner"
               >
                 {consistencyMessage}
               </motion.p>
@@ -156,12 +156,12 @@ export default function Home() {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white bg-opacity-10 dark:bg-gray-800 dark:bg-opacity-30 backdrop-blur-2xl rounded-3xl p-10 shadow-2xl w-1/2 border border-white border-opacity-20 dark:border-gray-700"
+            className="bg-white bg-opacity-10 dark:bg-gray-800 dark:bg-opacity-30 backdrop-blur-2xl rounded-3xl p-6 md:p-10 shadow-2xl w-full md:w-1/2 border border-white border-opacity-20 dark:border-gray-700"
           >
-            <h1 className="text-4xl font-extrabold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-400 dark:via-indigo-500 dark:to-purple-600">
+            <h1 className="text-3xl md:text-4xl font-extrabold mb-6 md:mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-400 dark:via-indigo-500 dark:to-purple-600">
               Account Life Calculator
             </h1>
-            <div className="space-y-8">
+            <div className="space-y-6 md:space-y-8">
               <div>
                 <label
                   htmlFor="maxDrawDown"
@@ -174,7 +174,7 @@ export default function Home() {
                   type="number"
                   onChange={(e) => setMaxDrawDown(Number(e.target.value))}
                   placeholder="Enter amount"
-                  className="w-full p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
+                  className="w-full p-3 md:p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
                 />
               </div>
               <div>
@@ -189,7 +189,7 @@ export default function Home() {
                   type="number"
                   onChange={(e) => setRiskPerTrade(Number(e.target.value))}
                   placeholder="Enter amount"
-                  className="w-full p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
+                  className="w-full p-3 md:p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
                 />
               </div>
 
@@ -200,7 +200,7 @@ export default function Home() {
                 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleCalculateAccountLife}
-                className="w-full bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-500 dark:via-indigo-600 dark:to-purple-700 text-white font-bold py-4 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"
+                className="w-full bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-500 dark:via-indigo-600 dark:to-purple-700 text-white font-bold py-3 md:py-4 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"
               >
                 Calculate Account Life
               </motion.button>
@@ -210,7 +210,7 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="mt-8 text-lg font-semibold text-center bg-white bg-opacity-20 dark:bg-gray-700 dark:bg-opacity-30 p-6 rounded-xl border border-white border-opacity-20 dark:border-gray-600 shadow-inner"
+                className="mt-6 md:mt-8 text-base md:text-lg font-semibold text-center bg-white bg-opacity-20 dark:bg-gray-700 dark:bg-opacity-30 p-4 md:p-6 rounded-xl border border-white border-opacity-20 dark:border-gray-600 shadow-inner"
               >
                 {accountLifeMessage}
               </motion.p>
@@ -222,7 +222,7 @@ export default function Home() {
 
         <div className="fixed bottom-0 left-0 w-full overflow-hidden bg-black bg-opacity-50 py-2">
           <div
-            className="whitespace-nowrap text-white font-bold text-lg"
+            className="whitespace-nowrap text-white font-bold text-sm md:text-lg"
             style={{
               transform: `translateX(${bannerPosition}%)`,
               transition: "transform 0.1s linear",
