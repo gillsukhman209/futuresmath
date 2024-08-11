@@ -11,6 +11,7 @@ export default function Home() {
   const [bannerPosition, setBannerPosition] = useState(100);
   const [maxDrawDown, setMaxDrawDown] = useState(0);
   const [riskPerTrade, setRiskPerTrade] = useState(0);
+  const [maxTradesPerDay, setMaxTradesPerDay] = useState(0);
   const [accountLifeMessage, setAccountLifeMessage] = useState("");
   const [consistencyPercentage, setConsistencyPercentage] = useState(40);
 
@@ -41,7 +42,7 @@ export default function Home() {
       );
     } else {
       setConsistencyMessage(
-        `✅ You meet the consistency rule. Your biggest day can't be greater than $${(
+        ` Your biggest day can't be greater than $${(
           accountBalance *
           (consistencyPercentage / 100)
         ).toFixed(2)}`
@@ -49,18 +50,23 @@ export default function Home() {
     }
   };
 
-  const calculateAccountLife = (maxDrawDown, riskPerTrade) => {
-    if (riskPerTrade === 0) {
-      return "Cannot calculate account life. Risk per trade cannot be zero.";
+  const calculateAccountLife = (maxDrawDown, riskPerTrade, maxTradesPerDay) => {
+    if (riskPerTrade === 0 || maxTradesPerDay === 0) {
+      return "Cannot calculate account life. Risk per trade and max trades per day must be greater than zero.";
     }
-    const accountLife = maxDrawDown / riskPerTrade;
-    return `Your account can withstand approximately ${accountLife.toFixed(
-      2
-    )} losing trades before reaching the maximum drawdown.`;
+    const totalRiskPerDay = riskPerTrade * maxTradesPerDay;
+    const accountLifeDays = Math.round(maxDrawDown / totalRiskPerDay);
+    return `Your account can withstand approximately ${accountLifeDays} days or ${
+      maxTradesPerDay * accountLifeDays
+    }   maximum losses before reaching the maximum drawdown.`;
   };
 
   const handleCalculateAccountLife = () => {
-    const message = calculateAccountLife(maxDrawDown, riskPerTrade);
+    const message = calculateAccountLife(
+      maxDrawDown,
+      riskPerTrade,
+      maxTradesPerDay
+    );
     setAccountLifeMessage(message);
   };
 
@@ -189,6 +195,21 @@ export default function Home() {
                   type="number"
                   onChange={(e) => setRiskPerTrade(Number(e.target.value))}
                   placeholder="Enter amount"
+                  className="w-full p-3 md:p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="maxTradesPerDay"
+                  className="block text-sm font-medium mb-2 text-pink-200 dark:text-blue-200"
+                >
+                  Max Trades in a Day
+                </label>
+                <input
+                  id="maxTradesPerDay"
+                  type="number"
+                  onChange={(e) => setMaxTradesPerDay(Number(e.target.value))}
+                  placeholder="Enter number of trades"
                   className="w-full p-3 md:p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
                 />
               </div>
