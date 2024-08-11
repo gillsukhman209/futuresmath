@@ -9,19 +9,18 @@ export default function Home() {
   const [biggestProfitDay, setBiggestProfitDay] = useState(0);
   const [accountBalance, setAccountBalance] = useState(0);
   const [consistencyMessage, setConsistencyMessage] = useState("");
-
   const calculateConsistencyRule = () => {
     if (biggestProfitDay > accountBalance * 0.4) {
       const requiredBalance = biggestProfitDay / 0.4;
       setConsistencyMessage(
-        `You don't meet the consistency rule. Your account balance needs to be at least $${requiredBalance.toFixed(
+        `❌ You don't meet the consistency rule. Your account balance needs to be at least $${requiredBalance.toFixed(
           2
         )} to meet the rule.`
       );
     } else if (biggestProfitDay > 0) {
-      setConsistencyMessage("You meet the consistency rule");
+      setConsistencyMessage("✅ You meet the consistency rule");
     } else {
-      setConsistencyMessage("You meet the consistency rule");
+      setConsistencyMessage("✅ You meet the consistency rule");
     }
   };
 
