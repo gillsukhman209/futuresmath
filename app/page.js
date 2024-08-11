@@ -219,7 +219,6 @@ export default function Home() {
         </div>
 
         <Toaster />
-
         <div className="fixed bottom-0 left-0 w-full overflow-hidden bg-black bg-opacity-50 py-2">
           <div
             className="whitespace-nowrap text-white font-bold text-sm md:text-lg"
@@ -229,7 +228,15 @@ export default function Home() {
             }}
           >
             🎉 Use my affiliate code "fearless" for a sweet 5% discount on any
-            MFFU account.
+            MFFU account. Or use this link{" "}
+            <a
+              href="https://myfundedfutures.com/?ref=1924"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:text-blue-300 underline"
+            >
+              https://myfundedfutures.com/?ref=1924
+            </a>
           </div>
         </div>
       </div>
