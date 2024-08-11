@@ -17,9 +17,15 @@ export default function Home() {
         )} to meet the rule.`
       );
     } else if (biggestProfitDay > 0) {
-      setConsistencyMessage("✅ You meet the consistency rule");
+      setConsistencyMessage(
+        "✅ You meet the consistency rule. You're biggest day can't be greater than $" +
+          accountBalance * 0.4
+      );
     } else {
-      setConsistencyMessage("✅ You meet the consistency rule");
+      setConsistencyMessage(
+        "✅ You meet the consistency rule. You're biggest day can't be greater than $" +
+          accountBalance * 0.4
+      );
     }
   };
 
