@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
 import { ThemeProvider } from "next-themes";
-import { useTheme } from "next-themes";
 
 export default function Home() {
   const [biggestProfitDay, setBiggestProfitDay] = useState(0);
