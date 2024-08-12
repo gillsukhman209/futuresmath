@@ -5,15 +5,18 @@ import { motion } from "framer-motion";
 import { ThemeProvider } from "next-themes";
 
 export default function Home() {
-  const [biggestProfitDay, setBiggestProfitDay] = useState(0);
   const [accountBalance, setAccountBalance] = useState(0);
+  const [biggestProfitDay, setBiggestProfitDay] = useState(0);
+  const [consistencyPercentage, setConsistencyPercentage] = useState(40);
   const [consistencyMessage, setConsistencyMessage] = useState("");
-  const [bannerPosition, setBannerPosition] = useState(100);
   const [maxDrawDown, setMaxDrawDown] = useState(0);
   const [riskPerTrade, setRiskPerTrade] = useState(0);
   const [maxTradesPerDay, setMaxTradesPerDay] = useState(0);
   const [accountLifeMessage, setAccountLifeMessage] = useState("");
-  const [consistencyPercentage, setConsistencyPercentage] = useState(40);
+  const [product, setProduct] = useState("");
+  const [stopLoss, setStopLoss] = useState(0);
+  const [tradeSizeResult, setTradeSizeResult] = useState("");
+  const [bannerPosition, setBannerPosition] = useState(100);
 
   useEffect(() => {
     const animateBanner = () => {
@@ -70,6 +73,50 @@ export default function Home() {
     setAccountLifeMessage(message);
   };
 
+  const calculateTradeSize = () => {
+    if (!product || riskPerTrade <= 0 || stopLoss <= 0) {
+      setTradeSizeResult("Please enter valid values for all fields.");
+      return;
+    }
+
+    let contractSize, tickValue;
+    switch (product.toLowerCase()) {
+      case "es":
+        contractSize = 50;
+        tickValue = 12.5;
+        break;
+      case "nq":
+        contractSize = 20;
+        tickValue = 5;
+        break;
+      case "rty":
+        contractSize = 50;
+        tickValue = 5;
+        break;
+      case "mes":
+        contractSize = 5;
+        tickValue = 1.25;
+        break;
+      case "mnq":
+        contractSize = 2;
+        tickValue = 0.5;
+        break;
+      default:
+        setTradeSizeResult("Invalid product. Please select a valid product.");
+        return;
+    }
+
+    const riskInDollars = points;
+    const stopLossInTicks = stopLoss * (contractSize / tickValue);
+    const contractsToTrade = Math.floor(
+      riskInDollars / (stopLossInTicks * tickValue)
+    );
+
+    setTradeSizeResult(
+      `For ${product.toUpperCase()}, you can trade ${contractsToTrade} contract(s) with a stop loss of ${stopLoss} points to risk ${riskPerTrade}% of your account.`
+    );
+  };
+
   return (
     <ThemeProvider attribute="class">
       <div className="min-h-screen w-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 text-white flex flex-col items-center justify-center p-4 md:p-8 transition-all duration-300">
@@ -81,7 +128,7 @@ export default function Home() {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-white bg-opacity-10 dark:bg-gray-800 dark:bg-opacity-30 backdrop-blur-2xl rounded-3xl p-6 md:p-10 shadow-2xl w-full md:w-1/2 border border-white border-opacity-20 dark:border-gray-700"
+            className="bg-white bg-opacity-10 dark:bg-gray-800 dark:bg-opacity-30 backdrop-blur-2xl rounded-3xl p-6 md:p-10 shadow-2xl w-full md:w-1/3 border border-white border-opacity-20 dark:border-gray-700"
           >
             <h2 className="text-3xl md:text-4xl font-extrabold mb-6 md:mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-400 dark:via-indigo-500 dark:to-purple-600">
               Consistency Calculator
@@ -165,11 +212,11 @@ export default function Home() {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white bg-opacity-10 dark:bg-gray-800 dark:bg-opacity-30 backdrop-blur-2xl rounded-3xl p-6 md:p-10 shadow-2xl w-full md:w-1/2 border border-white border-opacity-20 dark:border-gray-700"
+            className="bg-white bg-opacity-10 dark:bg-gray-800 dark:bg-opacity-30 backdrop-blur-2xl rounded-3xl p-6 md:p-10 shadow-2xl w-full md:w-1/3 border border-white border-opacity-20 dark:border-gray-700"
           >
-            <h1 className="text-3xl md:text-4xl font-extrabold mb-6 md:mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-400 dark:via-indigo-500 dark:to-purple-600">
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-6 md:mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-400 dark:via-indigo-500 dark:to-purple-600">
               Account Life Calculator
-            </h1>
+            </h2>
             <div className="space-y-6 md:space-y-8">
               <div>
                 <label
@@ -239,6 +286,84 @@ export default function Home() {
                 {accountLifeMessage}
               </motion.p>
             )}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="bg-white bg-opacity-10 dark:bg-gray-800 dark:bg-opacity-30 backdrop-blur-2xl rounded-3xl p-6 md:p-10 shadow-2xl w-full md:w-1/3 border border-white border-opacity-20 dark:border-gray-700"
+          >
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-6 md:mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-400 dark:via-indigo-500 dark:to-purple-600">
+              Trade Size Calculator
+            </h2>
+            <div className="space-y-6 md:space-y-8">
+              {/* Add input fields for trade size calculation here */}
+              <div>
+                <label
+                  htmlFor="product"
+                  className="block text-sm font-medium mb-2 text-pink-200 dark:text-blue-200"
+                >
+                  Product
+                </label>
+                <select
+                  id="product"
+                  onChange={(e) => setProduct(e.target.value)}
+                  className="w-full p-3 md:p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white"
+                >
+                  <option value="">Select a product</option>
+                  <option value="NQ">NQ</option>
+                  <option value="ES">ES</option>
+                  <option value="MNQ">MNQ</option>
+                  <option value="MES">MES</option>
+                </select>
+              </div>
+              <div>
+                <label
+                  htmlFor="riskPerTrade"
+                  className="block text-sm font-medium mb-2 text-pink-200 dark:text-blue-200"
+                >
+                  Risk Per Trade
+                </label>
+                <input
+                  id="riskPerTrade"
+                  type="number"
+                  onChange={(e) => setRiskPerTrade(Number(e.target.value))}
+                  placeholder="Enter risk per trade"
+                  className="w-full p-3 md:p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="pointsRisk"
+                  className="block text-sm font-medium mb-2 text-pink-200 dark:text-blue-200"
+                >
+                  Points Risk Per Trade
+                </label>
+                <input
+                  id="pointsRisk"
+                  type="number"
+                  onChange={(e) => setStopLoss(Number(e.target.value))}
+                  placeholder="Enter points risk per trade"
+                  className="w-full p-3 md:p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
+                />
+              </div>
+              <motion.button
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 0 15px rgba(255,255,255,0.5)",
+                }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  /* Add calculation logic */
+                  calculateTradeSize();
+                }}
+                className="w-full bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-500 dark:via-indigo-600 dark:to-purple-700 text-white font-bold py-3 md:py-4 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"
+              >
+                Calculate Trade Size
+              </motion.button>
+            </div>
+            {tradeSizeResult}
           </motion.div>
         </div>
         <Toaster />
