@@ -34,7 +34,7 @@ export default function Home() {
       setConsistencyMessage(
         `❌ You don't meet the consistency rule. Your account balance needs to be at least $${requiredBalance.toFixed(
           2
-        )} to meet the rule.`
+        )} to meet the consistency rule.`
       );
     } else if (biggestProfitDay > 0) {
       setConsistencyMessage(
