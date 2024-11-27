@@ -17,6 +17,7 @@ export default function Home() {
   const [stopLoss, setStopLoss] = useState(0);
   const [tradeSizeResult, setTradeSizeResult] = useState("");
   const [bannerPosition, setBannerPosition] = useState(100);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   useEffect(() => {
     const animateBanner = () => {
@@ -26,7 +27,7 @@ export default function Home() {
     };
     const intervalId = setInterval(animateBanner, 50);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [accountBalance, biggestProfitDay]);
 
   const calculateConsistencyRule = () => {
     if (biggestProfitDay > accountBalance * (consistencyPercentage / 100)) {
@@ -53,48 +54,14 @@ export default function Home() {
     }
   };
 
-  const calculateTradeSize = () => {
-    if (!product || riskPerTrade <= 0 || stopLoss <= 0) {
-      setTradeSizeResult("Please enter valid values for all fields.");
-      return;
-    }
+  const handleAccountBalanceChange = (e) => {
+    setAccountBalance(Number(e.target.value));
+    setIsButtonDisabled(e.target.value === "" || biggestProfitDay === "");
+  };
 
-    let contractSize, tickValue;
-    switch (product.toLowerCase()) {
-      case "es":
-        contractSize = 50;
-        tickValue = 12.5;
-        break;
-      case "nq":
-        contractSize = 20;
-        tickValue = 5;
-        break;
-      case "rty":
-        contractSize = 50;
-        tickValue = 5;
-        break;
-      case "mes":
-        contractSize = 5;
-        tickValue = 1.25;
-        break;
-      case "mnq":
-        contractSize = 2;
-        tickValue = 0.5;
-        break;
-      default:
-        setTradeSizeResult("Invalid product. Please select a valid product.");
-        return;
-    }
-
-    const riskInDollars = points;
-    const stopLossInTicks = stopLoss * (contractSize / tickValue);
-    const contractsToTrade = Math.floor(
-      riskInDollars / (stopLossInTicks * tickValue)
-    );
-
-    setTradeSizeResult(
-      `For ${product.toUpperCase()}, you can trade ${contractsToTrade} contract(s) with a stop loss of ${stopLoss} points to risk ${riskPerTrade}% of your account.`
-    );
+  const handleBiggestProfitDayChange = (e) => {
+    setBiggestProfitDay(Number(e.target.value));
+    setIsButtonDisabled(e.target.value === "" || accountBalance === "");
   };
 
   return (
@@ -119,12 +86,12 @@ export default function Home() {
                   htmlFor="accountBalance"
                   className="block text-sm font-medium mb-2 text-pink-200 dark:text-blue-200"
                 >
-                  Profit in account
+                  Profit in account (For ex: $53,000 - $3,000)
                 </label>
                 <input
                   id="accountBalance"
                   type="number"
-                  onChange={(e) => setAccountBalance(Number(e.target.value))}
+                  onChange={handleAccountBalanceChange}
                   placeholder="Enter amount"
                   className="w-full p-3 md:p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
                 />
@@ -139,7 +106,7 @@ export default function Home() {
                 <input
                   id="biggestProfitDay"
                   type="number"
-                  onChange={(e) => setBiggestProfitDay(Number(e.target.value))}
+                  onChange={handleBiggestProfitDayChange}
                   placeholder="Enter amount"
                   className="w-full p-3 md:p-4 bg-white bg-opacity-10 dark:bg-gray-700 dark:bg-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 dark:focus:ring-blue-400 transition text-white placeholder-gray-300 dark:placeholder-gray-400"
                 />
@@ -156,6 +123,7 @@ export default function Home() {
                   type="number"
                   min="10"
                   max="100"
+                  defaultValue="40"
                   onChange={(e) =>
                     setConsistencyPercentage(Number(e.target.value))
                   }
@@ -170,7 +138,10 @@ export default function Home() {
                 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={calculateConsistencyRule}
-                className="w-full bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-500 dark:via-indigo-600 dark:to-purple-700 text-white font-bold py-3 md:py-4 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"
+                className={`w-full bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 dark:from-blue-500 dark:via-indigo-600 dark:to-purple-700 text-white font-bold py-3 md:py-4 px-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 ${
+                  isButtonDisabled ? "cursor-not-allowed opacity-50" : ""
+                }`}
+                disabled={isButtonDisabled}
               >
                 Calculate Consistency
               </motion.button>
