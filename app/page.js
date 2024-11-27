@@ -119,7 +119,7 @@ export default function Home() {
                   htmlFor="accountBalance"
                   className="block text-sm font-medium mb-2 text-pink-200 dark:text-blue-200"
                 >
-                  Account Balance
+                  Profit in account
                 </label>
                 <input
                   id="accountBalance"
@@ -156,7 +156,6 @@ export default function Home() {
                   type="number"
                   min="10"
                   max="100"
-                  value={consistencyPercentage}
                   onChange={(e) =>
                     setConsistencyPercentage(Number(e.target.value))
                   }
